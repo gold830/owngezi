@@ -1,0 +1,510 @@
+/* =========================================
+   BLOVEN DECOR — METALLIC GOLD CONTACT BUBBLE
+========================================= */
+
+.contact-bubble {
+    --bubble-size: 50px;
+
+    position: fixed;
+    top: 45%;
+    left: 12px;
+
+    width: var(--bubble-size);
+    height: var(--bubble-size);
+
+    z-index: 99999;
+    border-radius: 50%;
+    isolation: isolate;
+
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    cursor: grab;
+
+    transition:
+        left 420ms cubic-bezier(.22, 1, .36, 1),
+        top 420ms cubic-bezier(.22, 1, .36, 1),
+        filter 250ms ease;
+}
+
+.contact-bubble.dock-left {
+    left: 12px;
+    right: auto;
+}
+
+.contact-bubble.dock-right {
+    left: auto;
+    right: 12px;
+}
+
+.contact-bubble.is-dragging {
+    cursor: grabbing;
+    transition: none;
+    filter: drop-shadow(0 9px 15px rgba(0, 0, 0, .25));
+}
+
+/* Main circular metallic button */
+
+.contact-bubble__button {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    border: 1px solid #fff0b0;
+
+    color: #39280a;
+
+    background:
+        radial-gradient(
+            circle at 30% 18%,
+            rgba(255, 255, 235, .98) 0%,
+            rgba(255, 255, 255, .35) 14%,
+            transparent 34%
+        ),
+        linear-gradient(
+            145deg,
+            #fff5bd 0%,
+            #f6dc79 14%,
+            #c99527 30%,
+            #ffeaa0 43%,
+            #b47a12 59%,
+            #f8d96b 73%,
+            #91600c 88%,
+            #eac653 100%
+        );
+
+    box-shadow:
+        inset 0 2px 2px rgba(255, 255, 255, .95),
+        inset 0 -3px 5px rgba(91, 52, 0, .35),
+        inset 2px 0 3px rgba(255, 248, 190, .45),
+        0 4px 10px rgba(0, 0, 0, .17),
+        0 1px 2px rgba(0, 0, 0, .12);
+
+    cursor: inherit;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Fine circular rim */
+
+.contact-bubble__button::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+
+    border: 1px solid rgba(255, 249, 207, .7);
+    border-radius: 50%;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(139, 89, 8, .14),
+        0 0 0 1px rgba(113, 74, 7, .14);
+
+    pointer-events: none;
+}
+
+/* Subtle metallic shine */
+
+.contact-bubble__button::after {
+    content: "";
+    position: absolute;
+
+    top: 5px;
+    left: 9px;
+
+    width: 15px;
+    height: 5px;
+
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .72);
+    filter: blur(2px);
+
+    transform: rotate(-35deg);
+    pointer-events: none;
+}
+
+.contact-bubble__phone,
+.contact-bubble__close {
+    position: absolute;
+
+    width: 19px;
+    height: 19px;
+
+    fill: currentColor;
+    transition:
+        opacity 220ms ease,
+        transform 300ms cubic-bezier(.22, 1, .36, 1);
+
+    pointer-events: none;
+}
+
+.contact-bubble__close {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+
+    opacity: 0;
+    transform: rotate(-90deg) scale(.5);
+}
+
+.contact-bubble.is-open .contact-bubble__phone {
+    opacity: 0;
+    transform: rotate(90deg) scale(.5);
+}
+
+.contact-bubble.is-open .contact-bubble__close {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+/* Circular contact icons */
+
+.contact-bubble__options {
+    position: absolute;
+    top: 50%;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translateY(-50%) scale(.92);
+    transition:
+        opacity 220ms ease,
+        transform 300ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.contact-bubble.dock-left .contact-bubble__options {
+    left: calc(100% + 9px);
+    flex-direction: row;
+}
+
+.contact-bubble.dock-right .contact-bubble__options {
+    right: calc(100% + 9px);
+    flex-direction: row-reverse;
+}
+
+.contact-bubble.is-open .contact-bubble__options {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50%) scale(1);
+}
+
+.contact-bubble__option {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    border: 1px solid rgba(255, 242, 181, .9);
+
+    color: #38270a;
+    text-decoration: none;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff6c9 0%,
+            #e7c45b 22%,
+            #bd8b20 48%,
+            #f7df86 70%,
+            #a97612 100%
+        );
+
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, .8),
+        inset 0 -2px 3px rgba(90, 56, 0, .22),
+        0 4px 10px rgba(0, 0, 0, .13);
+
+    opacity: 0;
+    transform: translateX(8px) scale(.75);
+
+    transition:
+        opacity 220ms ease,
+        transform 300ms cubic-bezier(.22, 1, .36, 1),
+        filter 200ms ease;
+}
+
+.contact-bubble.dock-right .contact-bubble__option {
+    transform: translateX(-8px) scale(.75);
+}
+
+.contact-bubble.is-open .contact-bubble__option {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.contact-bubble.is-open .contact-bubble__option:nth-child(1) {
+    transition-delay: 35ms;
+}
+
+.contact-bubble.is-open .contact-bubble__option:nth-child(2) {
+    transition-delay: 65ms;
+}
+
+.contact-bubble.is-open .contact-bubble__option:nth-child(3) {
+    transition-delay: 95ms;
+}
+
+.contact-bubble.is-open .contact-bubble__option:nth-child(4) {
+    transition-delay: 125ms;
+}
+
+.contact-bubble__option svg {
+    display: block;
+    width: 19px;
+    height: 19px;
+    fill: currentColor;
+}
+
+@media (hover: hover) {
+    .contact-bubble:not(.is-dragging):hover {
+        filter: drop-shadow(0 6px 12px rgba(140, 100, 20, .3));
+    }
+
+    .contact-bubble__option:hover {
+        filter: brightness(1.08);
+    }
+}
+
+.contact-bubble__button:focus-visible,
+.contact-bubble__option:focus-visible {
+    outline: 2px solid #9b741a;
+    outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+    .contact-bubble {
+        --bubble-size: 46px;
+    }
+
+    .contact-bubble.dock-left {
+        left: 8px;
+    }
+
+    .contact-bubble.dock-right {
+        right: 8px;
+    }
+
+    .contact-bubble__options {
+        gap: 6px;
+    }
+
+    .contact-bubble__option {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+    }
+
+    .contact-bubble__option svg {
+        width: 17px;
+        height: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contact-bubble,
+    .contact-bubble *,
+    .contact-bubble *::before,
+    .contact-bubble *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   BLOVEN DECOR — BLACK CIRCLES / BRAND RINGS
+========================================= */
+
+.contact-bubble__option {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+
+    background: #050505;
+    color: #ffffff;
+    text-decoration: none;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(255, 255, 255, .025),
+        0 4px 12px rgba(0, 0, 0, .24);
+
+    opacity: 0;
+    transform: translateX(8px) scale(.75);
+
+    transition:
+        opacity 220ms ease,
+        transform 300ms cubic-bezier(.22, 1, .36, 1),
+        box-shadow 220ms ease,
+        border-color 220ms ease;
+}
+
+/* Fine colored metallic ring */
+.contact-bubble__option::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+
+    border: 1px solid currentColor;
+    border-radius: 50%;
+
+    opacity: .38;
+    pointer-events: none;
+}
+
+/* WhatsApp — green icon and green ring */
+.contact-bubble__option[aria-label="WhatsApp"] {
+    color: #25D366;
+    border-color: #25D366;
+}
+
+/* YouTube — red icon and red ring */
+.contact-bubble__option[aria-label="YouTube"] {
+    color: #FF0033;
+    border-color: #FF0033;
+}
+
+/* Email — blue icon and blue ring */
+.contact-bubble__option[aria-label="Email"] {
+    color: #4285F4;
+    border-color: #4285F4;
+}
+
+/* Phone — green icon and green ring */
+.contact-bubble__option[aria-label="Call Bloven Decor"] {
+    color: #32D583;
+    border-color: #32D583;
+}
+
+/* Icon appearance */
+.contact-bubble__option svg {
+    position: relative;
+    z-index: 1;
+
+    display: block;
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+
+    fill: currentColor;
+}
+
+/* Preserve the existing outward animation */
+.contact-bubble.dock-right .contact-bubble__option {
+    transform: translateX(-8px) scale(.75);
+}
+
+.contact-bubble.is-open .contact-bubble__option {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+/* Subtle brand-colored glow on hover */
+@media (hover: hover) {
+    .contact-bubble__option:hover {
+        box-shadow:
+            inset 0 0 0 2px rgba(255, 255, 255, .035),
+            0 0 12px color-mix(in srgb, currentColor 35%, transparent),
+            0 4px 12px rgba(0, 0, 0, .3);
+    }
+}
+
+/* Keyboard accessibility */
+.contact-bubble__option:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+}
+
+/* Mobile sizing */
+@media (max-width: 600px) {
+    .contact-bubble__option {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+    }
+
+    .contact-bubble__option svg {
+        width: 17px;
+        height: 17px;
+    }
+}
